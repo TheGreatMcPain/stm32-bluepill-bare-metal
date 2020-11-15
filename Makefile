@@ -42,8 +42,6 @@ AS_SRC   = ./core.S
 C_SRC    = ./main.c
 
 INCLUDE = -I./
-INCLUDE += -I./CMSIS/Include
-INCLUDE += -I./CMSIS/Device/ST/STM32F1xx/Include
 
 OBJS =  $(VECT_TBL:.S=.o)
 OBJS += $(AS_SRC:.S=.o)
@@ -69,3 +67,4 @@ $(TARGET).bin: $(TARGET).elf
 clean:
 	rm -f $(OBJS)
 	rm -f $(TARGET).elf
+	rm -f *.bin
