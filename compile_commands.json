@@ -1,0 +1,58 @@
+[
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-x",
+            "assembler-with-cpp",
+            "-O0",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-Wall",
+            "-fmessage-length=0",
+            "-o",
+            "core.o",
+            "core.S"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "core.S"
+    },
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-Wall",
+            "-g",
+            "-fmessage-length=0",
+            "--specs=nosys.specs",
+            "-I./",
+            "-I./CMSIS/Include",
+            "-I./CMSIS/Device/ST/STM32F1xx/Include",
+            "-o",
+            "main.o",
+            "main.c"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "main.c"
+    },
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-x",
+            "assembler-with-cpp",
+            "-O0",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-Wall",
+            "-fmessage-length=0",
+            "-o",
+            "vector_table.o",
+            "vector_table.S"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "vector_table.S"
+    }
+]
