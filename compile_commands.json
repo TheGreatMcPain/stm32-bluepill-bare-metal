@@ -1,0 +1,24 @@
+[
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-Iinc",
+            "-ICMSIS/Device/ST/STM32F1xx/Include",
+            "-ICMSIS/Include",
+            "-O2",
+            "-Wall",
+            "-fdata-sections",
+            "-ffunction-sections",
+            "-g",
+            "-gdwarf-2",
+            "-o",
+            "build/main.o",
+            "src/main.c"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "src/main.c"
+    }
+]
