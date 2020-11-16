@@ -1,8 +1,8 @@
-#include "stm32f100xb.h"
-
-void dumbDelay(int value);
+#include "main.h"
 
 int main() {
+  systick_init();
+
   RCC->APB2ENR |= RCC_APB2ENR_IOPCEN; // Enable GPIOC
 
   GPIOC->CRH &= ~GPIO_CRH_CNF8;   // Out push-pull
@@ -10,12 +10,6 @@ int main() {
 
   while (1) {
     GPIOC->ODR ^= (1 << 8); // Toggle LED
-    dumbDelay(1000000);     // Dump Delay
-  }
-}
-
-void dumbDelay(int value) {
-  while (value > 0) {
-    value--;
+    DelayMS(1000);          // Delay for 1 second
   }
 }

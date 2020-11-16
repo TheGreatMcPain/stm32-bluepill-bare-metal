@@ -3,11 +3,35 @@
         "arguments": [
             "arm-none-eabi-gcc",
             "-c",
+            "-x",
+            "assembler-with-cpp",
             "-mcpu=cortex-m3",
             "-mthumb",
+            "-DSTM32F100xB",
             "-Iinc",
-            "-ICMSIS/Device/ST/STM32F1xx/Include",
-            "-ICMSIS/Include",
+            "-ICMSIS_STM32F1",
+            "-O2",
+            "-Wall",
+            "-fdata-sections",
+            "-ffunction-sections",
+            "-g",
+            "-gdwarf-2",
+            "-o",
+            "build/startup_stm32f100xb.o",
+            "startup_stm32f100xb.s"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "startup_stm32f100xb.s"
+    },
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-DSTM32F100xB",
+            "-Iinc",
+            "-ICMSIS_STM32F1",
             "-O2",
             "-Wall",
             "-fdata-sections",
@@ -20,5 +44,49 @@
         ],
         "directory": "/home/james/git-repos/mine/stm32-bare-metal",
         "file": "src/main.c"
+    },
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-DSTM32F100xB",
+            "-Iinc",
+            "-ICMSIS_STM32F1",
+            "-O2",
+            "-Wall",
+            "-fdata-sections",
+            "-ffunction-sections",
+            "-g",
+            "-gdwarf-2",
+            "-o",
+            "build/system_stm32f1xx.o",
+            "src/system_stm32f1xx.c"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "src/system_stm32f1xx.c"
+    },
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-DSTM32F100xB",
+            "-Iinc",
+            "-ICMSIS_STM32F1",
+            "-O2",
+            "-Wall",
+            "-fdata-sections",
+            "-ffunction-sections",
+            "-g",
+            "-gdwarf-2",
+            "-o",
+            "build/sysclock.o",
+            "src/sysclock.c"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "src/sysclock.c"
     }
 ]

@@ -6,7 +6,9 @@ OPT = -O2
 BUILD_DIR = build
 
 C_SOURCES = \
-src/main.c
+src/main.c \
+src/sysclock.c \
+src/system_stm32f1xx.c
 
 ASM_SOURCES = \
 startup_stm32f100xb.s
@@ -25,13 +27,16 @@ CPU = -mcpu=cortex-m3
 
 MCU = $(CPU) -mthumb
 
+C_DEFS = \
+-DSTM32F100xB
+
 C_INCLUDES = \
 -Iinc \
 -ICMSIS_STM32F1
 
 ASFLAGS = $(MCU) $(OPT) -Wall -fdata-sections -ffunction-sections
 
-CFLAGS = $(MCU) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2
