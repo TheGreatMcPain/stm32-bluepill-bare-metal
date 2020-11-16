@@ -27,8 +27,7 @@ MCU = $(CPU) -mthumb
 
 C_INCLUDES = \
 -Iinc \
--ICMSIS/Device/ST/STM32F1xx/Include \
--ICMSIS/Include
+-ICMSIS_STM32F1
 
 ASFLAGS = $(MCU) $(OPT) -Wall -fdata-sections -ffunction-sections
 
