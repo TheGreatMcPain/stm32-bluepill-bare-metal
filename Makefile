@@ -24,6 +24,7 @@ ASFLAGS += -fmessage-length=0
 CFLAGS += -mcpu=$(MCU_SPEC)
 CFLAGS += -mthumb
 CFLAGS += -Wall
+CFLAGS += -Os
 CFLAGS += -g
 CFLAGS += -fmessage-length=0
 CFLAGS += --specs=nosys.specs
