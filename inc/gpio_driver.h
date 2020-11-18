@@ -1,3 +1,5 @@
+#ifndef __GPIO_DRIVER_H
+#define __GPIO_DRIVER_H
 #include "stdint.h"
 
 #define RCC_APB2ENR (*(volatile uint32_t *)0x40021018UL)
@@ -41,3 +43,6 @@ void gpio_init(uint8_t port, uint8_t pin, uint8_t direction, uint8_t option);
 int read_gpio(uint8_t port, uint8_t pin);
 
 void write_gpio(uint8_t port, uint8_t pin, uint8_t state);
+
+void toggle_gpio(uint8_t port, uint8_t pin);
+#endif
