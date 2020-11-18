@@ -3,13 +3,23 @@
 int main() {
   systick_init();
 
-  RCC->APB2ENR |= RCC_APB2ENR_IOPCEN; // Enable GPIOC
+  // Initialize GPIO Port C Pin 8
+  // Mode Output Push-Pull at 2Mhz
+  gpio_init(PC, 8, OUT2, O_GP_PP);
 
-  GPIOC->CRH &= ~GPIO_CRH_CNF8;   // Out push-pull
-  GPIOC->CRH |= GPIO_CRH_MODE8_1; // Output 2Mhz
+  // Initialize GPIO Port A Pin 0
+  // Mode Input Pull-Pull
+  gpio_init(PA, 0, IN, I_PP);
 
   while (1) {
-    GPIOC->ODR ^= (1 << 8); // Toggle LED
-    DelayMS(1000);          // Delay for 1 second
+    while (!read_gpio(PA, 0)) {
+      // Wait for button
+    }
+
+    toggle_gpio(PC, 8); // Toggle LED
+
+    while (read_gpio(PA, 0)) {
+      // Wait for Button to release.
+    }
   }
 }
