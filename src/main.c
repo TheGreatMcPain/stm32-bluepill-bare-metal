@@ -1,7 +1,7 @@
 #include "main.h"
 
 int main() {
-  systick_init();
+  sysclock_init();
 
   // Initialize GPIO Port C Pin 8
   // Mode Output Push-Pull at 2Mhz

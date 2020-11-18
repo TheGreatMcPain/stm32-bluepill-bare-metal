@@ -1,55 +1,58 @@
 #include "sysclock.h"
 
-void systick_init(void) {
+// Set clock speed to 72Mhz and Enable SysTick Counter
+void sysclock_init(void) {
   /* Configure the HCLK to run at 24Mhz */
-  RCC->CR |= RCC_CR_HSEON; // Turn on External crystal
+  RCC_CR |= (1 << 16); // Enable HSEON bit
 
-  while (!(RCC->CR & RCC_CR_HSERDY)) {
-    // Wait for HSE to be stable
+  while (!(RCC_CR & (1 << 17))) {
+    // Wait for HSERDY bit to flip to 1.
   }
 
   // Configure PLL while it is off
-  RCC->CFGR &= ~(RCC_CFGR_PLLSRC | RCC_CFGR_PLLXTPRE | RCC_CFGR_PLLMULL);
+  // Reset PLLSRC, PLLXTPRE, and PLLMUL
+  RCC_CFGR &= ~((1 << 16) | (1 << 17) | (16 << 18));
 
-  RCC->CFGR &= ~(RCC_CFGR_PLLXTPRE); // PLLXTPRE to 0
-  RCC->CFGR |= RCC_CFGR_PLLSRC;      // PLL Source
-  RCC->CFGR |= RCC_CFGR_PLLMULL3;    // PLL Multiplier
-  RCC->CFGR |= RCC_CFGR_HPRE_DIV1;   // AHB Prescaler
-  RCC->CFGR |= RCC_CFGR_PPRE1_DIV1;  // APB1 prescaler
-  RCC->CFGR |= RCC_CFGR_PPRE2_DIV1;  // APB2 prescaler
+  RCC_CFGR &= ~(1 << 17); // PLLXTPRE bit to 0
+  RCC_CFGR |= (1 << 16);  // PLLSRC bit to 1
+  RCC_CFGR |= (1 << 18);  // PLLMULL bit to 0001
+  RCC_CFGR |= (0 << 4);   // HPRE to 0 aka SYSCLK no division.
+  RCC_CFGR |= (0 << 8);   // PPRE1 to 0 aka HCLK APB1 not divided.
+  RCC_CFGR |= (0 << 11);  // PPRE2 to 0 aka HCLK APB2 not divided.
 
-  RCC->CR |= RCC_CR_PLLON; // Turn on the PLL
+  RCC_CR |= (1 << 24); // Enable PLLON bit
 
-  while (!(RCC->CR & RCC_CR_PLLRDY)) {
-    // Wait till PLL is ready
+  while (!(RCC_CR & (1 << 25))) {
+    // Wait till PLLRDY bit to flip to 1
   }
 
   // Use PLL as SysClock Source
-  RCC->CFGR &= ~(RCC_CFGR_SW);
-  RCC->CFGR |= RCC_CFGR_SW_PLL;
-  while (!(RCC->CFGR & RCC_CFGR_SWS_PLL)) {
-    // Wait for System Clock to switch to PLL
+  // RCC->CFGR &= ~(RCC_CFGR_SW);
+  RCC_CFGR &= ~(3); // Reset SW bits to 0b11
+  // RCC->CFGR |= RCC_CFGR_SW_PLL;
+  RCC_CFGR |= 2; // SW bit to PLL
+  while (!(RCC_CFGR & (2 << 2))) {
+    // Wait for SWS bits to change to 2, aka PLL
   }
 
-  // Update SystemCoreClock variable
-  SystemCoreClockUpdate();
-
   /* Configure SysTick Counter */
-  SysTick->CTRL = 0;
-  SysTick->LOAD = 0x00FFFFFF;
-  SysTick->VAL = 0;
+  STK_CTRL = 0;          // Reset CTRL
+  STK_LOAD = 0x00FFFFFF; // Set LOAD to Max value
+  STK_VAL = 0;           // Reset VAL
 
-  SysTick->CTRL = 5;
+  STK_CTRL = 5; // Set CLKSOURCE to AHB, Disable TICKINT, and ENABLE Counter
 }
 
 void millisDelay(void) {
   // Set the counter limit to a millisecond
-  SysTick->LOAD = (SystemCoreClock / 1000) - 1;
+
+  // I set the clock speed to 24Mhz
+  STK_LOAD = 24000 - 1;
   // Reset the SysTick value register
-  SysTick->VAL = 0;
+  STK_VAL = 0;
 
   // Wait for the counter to wrap back to zero.
-  while ((SysTick->CTRL & (1 << 16)) == 0) {
+  while ((STK_CTRL & (1 << 16)) == 0) {
   }
 }
 
