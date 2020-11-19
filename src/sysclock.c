@@ -34,7 +34,9 @@ void sysclock_init(void) {
   while (!(RCC_CFGR & (2 << 2))) {
     // Wait for SWS bits to change to 2, aka PLL
   }
+}
 
+void systick_init(void) {
   /* Configure SysTick Counter */
   STK_CTRL = 0;          // Reset CTRL
   STK_LOAD = 0x00FFFFFF; // Set LOAD to Max value

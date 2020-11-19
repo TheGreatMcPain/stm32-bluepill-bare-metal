@@ -9,5 +9,6 @@
 #define STK_VAL (*(volatile uint32_t *)0xE000E018UL)
 
 void sysclock_init(void);
+void systick_init(void);
 void DelayMS(unsigned long t);
 #endif
