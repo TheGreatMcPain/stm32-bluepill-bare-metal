@@ -9,7 +9,12 @@ C_SOURCES = \
 src/main.c \
 src/gpio_driver.c \
 src/sysclock.c \
-src/system_stm32f1xx.c
+src/system_stm32f1xx.c \
+FreeRTOS/list.c \
+FreeRTOS/queue.c \
+FreeRTOS/tasks.c \
+FreeRTOS/portable/MemMang/heap_4.c \
+FreeRTOS/portable/GCC/ARM_CM3/port.c
 
 ASM_SOURCES = \
 startup_stm32f100xb.s
@@ -33,7 +38,9 @@ C_DEFS = \
 
 C_INCLUDES = \
 -Iinc \
--ICMSIS_STM32F1
+-ICMSIS_STM32F1 \
+-IFreeRTOS/include \
+-IFreeRTOS/portable/GCC/ARM_CM3
 
 ASFLAGS = $(MCU) $(OPT) -Wall -fdata-sections -ffunction-sections
 
