@@ -1,6 +1,6 @@
 #include "sysclock.h"
 
-// Set clock speed to 72Mhz and Enable SysTick Counter
+// Set clock speed to 24Mhz and Enable SysTick Counter
 void sysclock_init(void) {
   /* Configure the HCLK to run at 24Mhz */
   RCC_CR |= (1 << 16); // Enable HSEON bit
@@ -34,7 +34,9 @@ void sysclock_init(void) {
   while (!(RCC_CFGR & (2 << 2))) {
     // Wait for SWS bits to change to 2, aka PLL
   }
+}
 
+void systick_init(void) {
   /* Configure SysTick Counter */
   STK_CTRL = 0;          // Reset CTRL
   STK_LOAD = 0x00FFFFFF; // Set LOAD to Max value
