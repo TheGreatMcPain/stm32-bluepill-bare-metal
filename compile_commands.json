@@ -41,6 +41,30 @@
             "-g",
             "-gdwarf-2",
             "-o",
+            "build/port.o",
+            "FreeRTOS/portable/GCC/ARM_CM3/port.c"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "FreeRTOS/portable/GCC/ARM_CM3/port.c"
+    },
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-DSTM32F100xB",
+            "-Iinc",
+            "-ICMSIS_STM32F1",
+            "-IFreeRTOS/include",
+            "-IFreeRTOS/portable/GCC/ARM_CM3",
+            "-O2",
+            "-Wall",
+            "-fdata-sections",
+            "-ffunction-sections",
+            "-g",
+            "-gdwarf-2",
+            "-o",
             "build/list.o",
             "FreeRTOS/list.c"
         ],
@@ -65,11 +89,83 @@
             "-g",
             "-gdwarf-2",
             "-o",
-            "build/event_groups.o",
-            "FreeRTOS/event_groups.c"
+            "build/gpio_driver.o",
+            "src/gpio_driver.c"
         ],
         "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "FreeRTOS/event_groups.c"
+        "file": "src/gpio_driver.c"
+    },
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-DSTM32F100xB",
+            "-Iinc",
+            "-ICMSIS_STM32F1",
+            "-IFreeRTOS/include",
+            "-IFreeRTOS/portable/GCC/ARM_CM3",
+            "-O2",
+            "-Wall",
+            "-fdata-sections",
+            "-ffunction-sections",
+            "-g",
+            "-gdwarf-2",
+            "-o",
+            "build/system_stm32f1xx.o",
+            "src/system_stm32f1xx.c"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "src/system_stm32f1xx.c"
+    },
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-DSTM32F100xB",
+            "-Iinc",
+            "-ICMSIS_STM32F1",
+            "-IFreeRTOS/include",
+            "-IFreeRTOS/portable/GCC/ARM_CM3",
+            "-O2",
+            "-Wall",
+            "-fdata-sections",
+            "-ffunction-sections",
+            "-g",
+            "-gdwarf-2",
+            "-o",
+            "build/queue.o",
+            "FreeRTOS/queue.c"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "FreeRTOS/queue.c"
+    },
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-DSTM32F100xB",
+            "-Iinc",
+            "-ICMSIS_STM32F1",
+            "-IFreeRTOS/include",
+            "-IFreeRTOS/portable/GCC/ARM_CM3",
+            "-O2",
+            "-Wall",
+            "-fdata-sections",
+            "-ffunction-sections",
+            "-g",
+            "-gdwarf-2",
+            "-o",
+            "build/main.o",
+            "src/main.c"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "src/main.c"
     },
     {
         "arguments": [
@@ -115,102 +211,6 @@
             "-g",
             "-gdwarf-2",
             "-o",
-            "build/main.o",
-            "src/main.c"
-        ],
-        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "src/main.c"
-    },
-    {
-        "arguments": [
-            "arm-none-eabi-gcc",
-            "-c",
-            "-mcpu=cortex-m3",
-            "-mthumb",
-            "-DSTM32F100xB",
-            "-Iinc",
-            "-ICMSIS_STM32F1",
-            "-IFreeRTOS/include",
-            "-IFreeRTOS/portable/GCC/ARM_CM3",
-            "-O2",
-            "-Wall",
-            "-fdata-sections",
-            "-ffunction-sections",
-            "-g",
-            "-gdwarf-2",
-            "-o",
-            "build/gpio_driver.o",
-            "src/gpio_driver.c"
-        ],
-        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "src/gpio_driver.c"
-    },
-    {
-        "arguments": [
-            "arm-none-eabi-gcc",
-            "-c",
-            "-mcpu=cortex-m3",
-            "-mthumb",
-            "-DSTM32F100xB",
-            "-Iinc",
-            "-ICMSIS_STM32F1",
-            "-IFreeRTOS/include",
-            "-IFreeRTOS/portable/GCC/ARM_CM3",
-            "-O2",
-            "-Wall",
-            "-fdata-sections",
-            "-ffunction-sections",
-            "-g",
-            "-gdwarf-2",
-            "-o",
-            "build/croutine.o",
-            "FreeRTOS/croutine.c"
-        ],
-        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "FreeRTOS/croutine.c"
-    },
-    {
-        "arguments": [
-            "arm-none-eabi-gcc",
-            "-c",
-            "-mcpu=cortex-m3",
-            "-mthumb",
-            "-DSTM32F100xB",
-            "-Iinc",
-            "-ICMSIS_STM32F1",
-            "-IFreeRTOS/include",
-            "-IFreeRTOS/portable/GCC/ARM_CM3",
-            "-O2",
-            "-Wall",
-            "-fdata-sections",
-            "-ffunction-sections",
-            "-g",
-            "-gdwarf-2",
-            "-o",
-            "build/queue.o",
-            "FreeRTOS/queue.c"
-        ],
-        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "FreeRTOS/queue.c"
-    },
-    {
-        "arguments": [
-            "arm-none-eabi-gcc",
-            "-c",
-            "-mcpu=cortex-m3",
-            "-mthumb",
-            "-DSTM32F100xB",
-            "-Iinc",
-            "-ICMSIS_STM32F1",
-            "-IFreeRTOS/include",
-            "-IFreeRTOS/portable/GCC/ARM_CM3",
-            "-O2",
-            "-Wall",
-            "-fdata-sections",
-            "-ffunction-sections",
-            "-g",
-            "-gdwarf-2",
-            "-o",
             "build/heap_4.o",
             "FreeRTOS/portable/MemMang/heap_4.c"
         ],
@@ -235,82 +235,10 @@
             "-g",
             "-gdwarf-2",
             "-o",
-            "build/timers.o",
-            "FreeRTOS/timers.c"
-        ],
-        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "FreeRTOS/timers.c"
-    },
-    {
-        "arguments": [
-            "arm-none-eabi-gcc",
-            "-c",
-            "-mcpu=cortex-m3",
-            "-mthumb",
-            "-DSTM32F100xB",
-            "-Iinc",
-            "-ICMSIS_STM32F1",
-            "-IFreeRTOS/include",
-            "-IFreeRTOS/portable/GCC/ARM_CM3",
-            "-O2",
-            "-Wall",
-            "-fdata-sections",
-            "-ffunction-sections",
-            "-g",
-            "-gdwarf-2",
-            "-o",
             "build/sysclock.o",
             "src/sysclock.c"
         ],
         "directory": "/home/james/git-repos/mine/stm32-bare-metal",
         "file": "src/sysclock.c"
-    },
-    {
-        "arguments": [
-            "arm-none-eabi-gcc",
-            "-c",
-            "-mcpu=cortex-m3",
-            "-mthumb",
-            "-DSTM32F100xB",
-            "-Iinc",
-            "-ICMSIS_STM32F1",
-            "-IFreeRTOS/include",
-            "-IFreeRTOS/portable/GCC/ARM_CM3",
-            "-O2",
-            "-Wall",
-            "-fdata-sections",
-            "-ffunction-sections",
-            "-g",
-            "-gdwarf-2",
-            "-o",
-            "build/system_stm32f1xx.o",
-            "src/system_stm32f1xx.c"
-        ],
-        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "src/system_stm32f1xx.c"
-    },
-    {
-        "arguments": [
-            "arm-none-eabi-gcc",
-            "-c",
-            "-mcpu=cortex-m3",
-            "-mthumb",
-            "-DSTM32F100xB",
-            "-Iinc",
-            "-ICMSIS_STM32F1",
-            "-IFreeRTOS/include",
-            "-IFreeRTOS/portable/GCC/ARM_CM3",
-            "-O2",
-            "-Wall",
-            "-fdata-sections",
-            "-ffunction-sections",
-            "-g",
-            "-gdwarf-2",
-            "-o",
-            "build/port.o",
-            "FreeRTOS/portable/GCC/ARM_CM3/port.c"
-        ],
-        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "FreeRTOS/portable/GCC/ARM_CM3/port.c"
     }
 ]
