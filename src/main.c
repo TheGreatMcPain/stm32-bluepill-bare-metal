@@ -25,6 +25,7 @@ static void led_task(void *args) {
 
 int main() {
   sysclock_init();
+  systick_init();
 
   // Initialize GPIO Port C Pin 8
   // Mode Output Push-Pull at 2Mhz
