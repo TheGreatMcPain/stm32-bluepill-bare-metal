@@ -28,9 +28,9 @@ int main() {
   systick_init();
 
   // Initialize GPIO Port C Pin 8
-  // Mode Output Push-Pull at 2Mhz
-  gpio_init(PC, 8, OUT2, O_GP_PP);
-  gpio_init(PC, 9, OUT2, O_GP_PP);
+  // Mode Output Push-Pull at 50Mhz
+  gpio_init(PC, 8, OUT50, O_GP_PP);
+  gpio_init(PC, 9, OUT50, O_GP_PP);
 
   int *led1Ptr = (int *)malloc(sizeof(int));
 
