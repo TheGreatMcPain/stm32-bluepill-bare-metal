@@ -1,7 +1,7 @@
 TARGET = main
 
 DEBUG = 1
-OPT = -O2
+OPT = -Os
 
 BUILD_DIR = build
 
@@ -10,6 +10,7 @@ src/main.c \
 src/gpio_driver.c \
 src/sysclock.c \
 src/system_stm32f1xx.c \
+src/i2c_driver.c \
 FreeRTOS/list.c \
 FreeRTOS/queue.c \
 FreeRTOS/tasks.c \
