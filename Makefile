@@ -11,6 +11,7 @@ src/gpio_driver.c \
 src/sysclock.c \
 src/system_stm32f1xx.c \
 src/i2c_driver.c \
+src/i2c_lcd_driver.c \
 FreeRTOS/list.c \
 FreeRTOS/queue.c \
 FreeRTOS/tasks.c \
