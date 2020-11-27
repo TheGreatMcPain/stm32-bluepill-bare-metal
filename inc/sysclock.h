@@ -10,5 +10,6 @@
 
 void sysclock_init(void);
 void systick_init(void);
-void DelayMS(unsigned long t);
+void DelayUS(uint32_t t);
+void DelayMS(uint32_t t);
 #endif

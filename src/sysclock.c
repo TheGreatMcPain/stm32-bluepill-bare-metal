@@ -45,6 +45,14 @@ void systick_init(void) {
   STK_CTRL = 5; // Set CLKSOURCE to AHB, Disable TICKINT, and ENABLE Counter
 }
 
+// Same as millisDelay(), but for micro second.
+void microDelay(void) {
+  STK_LOAD = 24;
+  STK_VAL = 0;
+  while ((STK_CTRL & (1 << 16)) == 0) {
+  }
+}
+
 void millisDelay(void) {
   // Set the counter limit to a millisecond
 
@@ -58,7 +66,13 @@ void millisDelay(void) {
   }
 }
 
-void DelayMS(unsigned long t) {
+void DelayUS(uint32_t t) {
+  for (; t > 0; t--) {
+    microDelay();
+  }
+}
+
+void DelayMS(uint32_t t) {
   for (; t > 0; t--) {
     millisDelay();
   }
