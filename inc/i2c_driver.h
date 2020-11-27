@@ -1,3 +1,5 @@
+#ifndef __I2C_DRIVER_H
+#define __I2C_DRIVER_H
 #include "gpio_driver.h"
 #include "stdint.h"
 #include "stm32f1xx.h"
@@ -19,3 +21,4 @@ void i2c_write(uint8_t i2c, uint8_t devaddr, uint8_t memaddr, uint8_t *data,
                uint8_t length);
 
 void i2c_init(uint8_t i2c, uint8_t speed);
+#endif
