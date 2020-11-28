@@ -1,40 +1,38 @@
 #include "utils.h"
-#include "stm32f1xx.h"
 
 volatile uint32_t tickCounter = 0;
 
-// Set clock speed to 24Mhz and Enable SysTick Counter
+// Set clock speed to 24Mhz
 void sysclock_init(void) {
   /* Configure the HCLK to run at 24Mhz */
-  RCC_CR |= (1 << 16); // Enable HSEON bit
+  RCC->CR |= RCC_CR_HSEON; // Enable HSEON bit
 
-  while (!(RCC_CR & (1 << 17))) {
+  while (!(RCC->CR & RCC_CR_HSERDY)) {
     // Wait for HSERDY bit to flip to 1.
   }
 
   // Configure PLL while it is off
   // Reset PLLSRC, PLLXTPRE, and PLLMUL
-  RCC_CFGR &= ~((1 << 16) | (1 << 17) | (16 << 18));
+  RCC->CFGR &= ~(RCC_CFGR_PLLSRC | RCC_CFGR_PLLXTPRE | RCC_CFGR_PLLMULL);
 
-  RCC_CFGR &= ~(1 << 17); // PLLXTPRE bit to 0
-  RCC_CFGR |= (1 << 16);  // PLLSRC bit to 1
-  RCC_CFGR |= (1 << 18);  // PLLMULL bit to 0001
-  RCC_CFGR |= (0 << 4);   // HPRE to 0 aka SYSCLK no division.
-  RCC_CFGR |= (0 << 8);   // PPRE1 to 0 aka HCLK APB1 not divided.
-  RCC_CFGR |= (0 << 11);  // PPRE2 to 0 aka HCLK APB2 not divided.
+  RCC->CFGR &= ~(RCC_CFGR_PLLXTPRE); // PLLXTPRE bit to 0
+  RCC->CFGR |= RCC_CFGR_PLLSRC;
+  RCC->CFGR |= RCC_CFGR_PLLMULL3;
+  // Set these to 0, because the stm32f100rb can only go upto 24Mhz.
+  RCC->CFGR &= ~(RCC_CFGR_HPRE);
+  RCC->CFGR &= ~(RCC_CFGR_PPRE1);
+  RCC->CFGR &= ~(RCC_CFGR_PPRE2);
 
-  RCC_CR |= (1 << 24); // Enable PLLON bit
+  RCC->CR |= RCC_CR_PLLON; // Enable PLLON bit
 
-  while (!(RCC_CR & (1 << 25))) {
+  while (!(RCC->CR & RCC_CR_PLLRDY)) {
     // Wait till PLLRDY bit to flip to 1
   }
 
   // Use PLL as SysClock Source
-  // RCC->CFGR &= ~(RCC_CFGR_SW);
-  RCC_CFGR &= ~(3); // Reset SW bits to 0b11
-  // RCC->CFGR |= RCC_CFGR_SW_PLL;
-  RCC_CFGR |= 2; // SW bit to PLL
-  while (!(RCC_CFGR & (2 << 2))) {
+  RCC->CFGR &= ~(RCC_CFGR_SW);
+  RCC->CFGR |= RCC_CFGR_SW_PLL;
+  while (!(RCC->CFGR & RCC_CFGR_SWS_PLL)) {
     // Wait for SWS bits to change to 2, aka PLL
   }
 }
@@ -71,23 +69,24 @@ void tim4_tick_init(void) {
 
 void systick_init(void) {
   /* Configure SysTick Counter */
-  STK_CTRL = 0;          // Reset CTRL
-  STK_LOAD = 0x00FFFFFF; // Set LOAD to Max value
-  STK_VAL = 0;           // Reset VAL
+  SysTick->CTRL = 0;          // Reset CTRL
+  SysTick->LOAD = 0x00FFFFFF; // Set LOAD to Max value
+  SysTick->VAL = 0;           // Reset VAL
 
-  STK_CTRL = 5; // Set CLKSOURCE to AHB, Disable TICKINT, and ENABLE Counter
+  SysTick->CTRL =
+      5; // Set CLKSOURCE to AHB, Disable TICKINT, and ENABLE Counter
 }
 
 void millisDelay(void) {
   // Set the counter limit to a millisecond
 
   // I set the clock speed to 24Mhz
-  STK_LOAD = 24000 - 1;
+  SysTick->LOAD = 24000 - 1;
   // Reset the SysTick value register
-  STK_VAL = 0;
+  SysTick->VAL = 0;
 
-  // Wait for the counter to wrap back to zero.
-  while ((STK_CTRL & (1 << 16)) == 0) {
+  while ((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0) {
+    // Wait for the counter to wrap back to zero.
   }
 }
 
