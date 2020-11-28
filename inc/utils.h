@@ -8,8 +8,9 @@
 #define STK_LOAD (*(volatile uint32_t *)0xE000E014UL)
 #define STK_VAL (*(volatile uint32_t *)0xE000E018UL)
 
-void sysclock_init(void);
-void systick_init(void);
-void DelayUS(uint32_t t);
-void DelayMS(uint32_t t);
+void sysclock_init(void);     // Set up clock speed
+void systick_init(void);      // Setup SysTick counter.
+void tim4_tick_init(void);    // Setup TIM4 as tick counter.
+uint32_t getTickMillis(void); // Get tick count from TIM4 counter.
+void DelayMS(uint32_t t);     // Delay for num of milli-seconds.
 #endif

@@ -1,4 +1,7 @@
 #include "utils.h"
+#include "stm32f1xx.h"
+
+volatile uint32_t tickCounter = 0;
 
 // Set clock speed to 24Mhz and Enable SysTick Counter
 void sysclock_init(void) {
@@ -36,6 +39,36 @@ void sysclock_init(void) {
   }
 }
 
+// Use TIM4 as tick source
+void tim4_tick_init(void) {
+  // Enable TIM4
+  RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;
+
+  // Enable global interrupt for TIM4
+  NVIC_SetPriority(TIM4_IRQn, 0x03);
+  NVIC_EnableIRQ(TIM4_IRQn);
+
+  // Make sure TIM4 counter is off
+  TIM4->CR1 &= ~(TIM_CR1_CEN);
+
+  // Reset the peripheral.
+  RCC->APB1RSTR |= (RCC_APB1RSTR_TIM4RST);
+  RCC->APB1RSTR &= ~(RCC_APB1RSTR_TIM4RST);
+
+  // Set prescaler/autoreload timing registers
+  TIM4->PSC = 23;  // 24Mhz
+  TIM4->ARR = 999; // 1Mhz = 1ms
+
+  // Send an update event to reset the timer and apply settings.
+  TIM4->EGR |= TIM_EGR_UG;
+
+  // Enable the hardware interrupt.
+  TIM4->DIER |= TIM_DIER_UIE;
+
+  // Enable the timer.
+  TIM4->CR1 |= TIM_CR1_CEN;
+}
+
 void systick_init(void) {
   /* Configure SysTick Counter */
   STK_CTRL = 0;          // Reset CTRL
@@ -43,14 +76,6 @@ void systick_init(void) {
   STK_VAL = 0;           // Reset VAL
 
   STK_CTRL = 5; // Set CLKSOURCE to AHB, Disable TICKINT, and ENABLE Counter
-}
-
-// Same as millisDelay(), but for micro second.
-void microDelay(void) {
-  STK_LOAD = 24;
-  STK_VAL = 0;
-  while ((STK_CTRL & (1 << 16)) == 0) {
-  }
 }
 
 void millisDelay(void) {
@@ -66,14 +91,26 @@ void millisDelay(void) {
   }
 }
 
-void DelayUS(uint32_t t) {
-  for (; t > 0; t--) {
-    microDelay();
+// void DelayMS(uint32_t t) {
+//   for (; t > 0; t--) {
+//     millisDelay();
+//   }
+// }
+
+uint32_t getTickMillis(void) { return tickCounter; }
+
+void DelayMS(uint32_t t) {
+  uint32_t currentTick = tickCounter;
+
+  while (tickCounter - currentTick == t) {
+    // Wait for t number of ticks.
   }
 }
 
-void DelayMS(uint32_t t) {
-  for (; t > 0; t--) {
-    millisDelay();
+void TIM4_IRQHandler(void) {
+  if (TIM4->SR & TIM_SR_UIF) {
+    TIM4->SR &= ~(TIM_SR_UIF);
+    // Increment tickCounter
+    tickCounter++;
   }
 }
