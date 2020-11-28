@@ -8,7 +8,7 @@ BUILD_DIR = build
 C_SOURCES = \
 src/main.c \
 src/gpio_driver.c \
-src/sysclock.c \
+src/utils.c \
 src/system_stm32f1xx.c \
 src/i2c_driver.c \
 src/i2c_lcd_driver.c \

@@ -5,7 +5,7 @@
 #define __I2C_LCD_DRIVER_H
 #include "i2c_driver.h"
 #include "stdint.h"
-#include "sysclock.h"
+#include "utils.h"
 
 void lcd_send_cmd(uint8_t i2c, char cmd);
 
