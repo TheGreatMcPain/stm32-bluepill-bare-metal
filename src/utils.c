@@ -35,6 +35,8 @@ void sysclock_init(void) {
   while (!(RCC->CFGR & RCC_CFGR_SWS_PLL)) {
     // Wait for SWS bits to change to 2, aka PLL
   }
+
+  SystemCoreClockUpdate();
 }
 
 // Use TIM4 as tick source
@@ -54,8 +56,8 @@ void tim4_tick_init(void) {
   RCC->APB1RSTR &= ~(RCC_APB1RSTR_TIM4RST);
 
   // Set prescaler/autoreload timing registers
-  TIM4->PSC = 23;  // 24Mhz
-  TIM4->ARR = 999; // 1Mhz = 1ms
+  TIM4->PSC = (SystemCoreClock / 1000000) - 1; // 24Mhz / 1Mhz - 1 = 23
+  TIM4->ARR = (1000000 / 1000) - 1;            // 1Mhz / 1000 - 1 = ~1ms
 
   // Send an update event to reset the timer and apply settings.
   TIM4->EGR |= TIM_EGR_UG;
@@ -81,7 +83,7 @@ void millisDelay(void) {
   // Set the counter limit to a millisecond
 
   // I set the clock speed to 24Mhz
-  SysTick->LOAD = 24000 - 1;
+  SysTick->LOAD = (SystemCoreClock / 1000) - 1;
   // Reset the SysTick value register
   SysTick->VAL = 0;
 

@@ -3,22 +3,19 @@
 #include "gpio_driver.h"
 #include "stdint.h"
 #include "stm32f1xx.h"
+extern uint32_t SystemCoreClock;
 
-// 1/24Mhz = 41.6nS
-// Std mode: 100Khz
-// Fst mode: 500Khz
-// 1/100Khz = 10uS then divide by 2. 10uS/2 = 5uS
-// 5uS / 41.6nS = 120
+// Std mode: 100Khz = 100000
+// Fst mode: 400Khz = 400000
 //
-// 1/500Khz = 2uS, 2/16 = 0.125
-// 1.25 / 41.6 = 30
-#define i2c_SM 120
-#define i2c_FM 30
+// Maximum PCLK = 24000000 on STM32VLDiscovery
+#define i2c_SM (((1.0 / 100000.0) / 2.0) / (1.0 / (float)SystemCoreClock))
+#define i2c_FM (((1.0 / 400000.0) / 2.0) / (1.0 / (float)SystemCoreClock))
 
 // void i2c_read();
 
-void i2c_write(uint8_t i2c, uint8_t devaddr, uint8_t memaddr, uint8_t *data,
-               uint8_t length);
+void i2c_write(I2C_TypeDef *I2C, uint8_t devaddr, uint8_t memaddr,
+               uint8_t *data, uint8_t length);
 
-void i2c_init(uint8_t i2c, uint8_t speed);
+void i2c_init(I2C_TypeDef *I2C, uint8_t speed);
 #endif
