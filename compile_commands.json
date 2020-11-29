@@ -17,11 +17,35 @@
             "-g",
             "-gdwarf-2",
             "-o",
-            "build/i2c_driver.o",
-            "src/i2c_driver.c"
+            "build/queue.o",
+            "FreeRTOS/queue.c"
         ],
         "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "src/i2c_driver.c"
+        "file": "FreeRTOS/queue.c"
+    },
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-DSTM32F100xB",
+            "-Iinc",
+            "-ICMSIS_STM32F1",
+            "-IFreeRTOS/include",
+            "-IFreeRTOS/portable/GCC/ARM_CM3",
+            "-Os",
+            "-Wall",
+            "-fdata-sections",
+            "-ffunction-sections",
+            "-g",
+            "-gdwarf-2",
+            "-o",
+            "build/heap_4.o",
+            "FreeRTOS/portable/MemMang/heap_4.c"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "FreeRTOS/portable/MemMang/heap_4.c"
     },
     {
         "arguments": [
@@ -65,11 +89,11 @@
             "-g",
             "-gdwarf-2",
             "-o",
-            "build/main.o",
-            "src/main.c"
+            "build/utils.o",
+            "src/utils.c"
         ],
         "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "src/main.c"
+        "file": "src/utils.c"
     },
     {
         "arguments": [
@@ -89,11 +113,11 @@
             "-g",
             "-gdwarf-2",
             "-o",
-            "build/gpio_driver.o",
-            "src/gpio_driver.c"
+            "build/system_stm32f1xx.o",
+            "src/system_stm32f1xx.c"
         ],
         "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "src/gpio_driver.c"
+        "file": "src/system_stm32f1xx.c"
     },
     {
         "arguments": [
@@ -113,35 +137,11 @@
             "-g",
             "-gdwarf-2",
             "-o",
-            "build/tasks.o",
-            "FreeRTOS/tasks.c"
+            "build/i2c_driver.o",
+            "src/i2c_driver.c"
         ],
         "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "FreeRTOS/tasks.c"
-    },
-    {
-        "arguments": [
-            "arm-none-eabi-gcc",
-            "-c",
-            "-mcpu=cortex-m3",
-            "-mthumb",
-            "-DSTM32F100xB",
-            "-Iinc",
-            "-ICMSIS_STM32F1",
-            "-IFreeRTOS/include",
-            "-IFreeRTOS/portable/GCC/ARM_CM3",
-            "-Os",
-            "-Wall",
-            "-fdata-sections",
-            "-ffunction-sections",
-            "-g",
-            "-gdwarf-2",
-            "-o",
-            "build/queue.o",
-            "FreeRTOS/queue.c"
-        ],
-        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "FreeRTOS/queue.c"
+        "file": "src/i2c_driver.c"
     },
     {
         "arguments": [
@@ -187,11 +187,59 @@
             "-g",
             "-gdwarf-2",
             "-o",
-            "build/sysclock.o",
-            "src/sysclock.c"
+            "build/gpio_driver.o",
+            "src/gpio_driver.c"
         ],
         "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "src/sysclock.c"
+        "file": "src/gpio_driver.c"
+    },
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-DSTM32F100xB",
+            "-Iinc",
+            "-ICMSIS_STM32F1",
+            "-IFreeRTOS/include",
+            "-IFreeRTOS/portable/GCC/ARM_CM3",
+            "-Os",
+            "-Wall",
+            "-fdata-sections",
+            "-ffunction-sections",
+            "-g",
+            "-gdwarf-2",
+            "-o",
+            "build/i2c_lcd_driver.o",
+            "src/i2c_lcd_driver.c"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "src/i2c_lcd_driver.c"
+    },
+    {
+        "arguments": [
+            "arm-none-eabi-gcc",
+            "-c",
+            "-mcpu=cortex-m3",
+            "-mthumb",
+            "-DSTM32F100xB",
+            "-Iinc",
+            "-ICMSIS_STM32F1",
+            "-IFreeRTOS/include",
+            "-IFreeRTOS/portable/GCC/ARM_CM3",
+            "-Os",
+            "-Wall",
+            "-fdata-sections",
+            "-ffunction-sections",
+            "-g",
+            "-gdwarf-2",
+            "-o",
+            "build/main.o",
+            "src/main.c"
+        ],
+        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
+        "file": "src/main.c"
     },
     {
         "arguments": [
@@ -235,58 +283,10 @@
             "-g",
             "-gdwarf-2",
             "-o",
-            "build/heap_4.o",
-            "FreeRTOS/portable/MemMang/heap_4.c"
+            "build/tasks.o",
+            "FreeRTOS/tasks.c"
         ],
         "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "FreeRTOS/portable/MemMang/heap_4.c"
-    },
-    {
-        "arguments": [
-            "arm-none-eabi-gcc",
-            "-c",
-            "-mcpu=cortex-m3",
-            "-mthumb",
-            "-DSTM32F100xB",
-            "-Iinc",
-            "-ICMSIS_STM32F1",
-            "-IFreeRTOS/include",
-            "-IFreeRTOS/portable/GCC/ARM_CM3",
-            "-Os",
-            "-Wall",
-            "-fdata-sections",
-            "-ffunction-sections",
-            "-g",
-            "-gdwarf-2",
-            "-o",
-            "build/system_stm32f1xx.o",
-            "src/system_stm32f1xx.c"
-        ],
-        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "src/system_stm32f1xx.c"
-    },
-    {
-        "arguments": [
-            "arm-none-eabi-gcc",
-            "-c",
-            "-mcpu=cortex-m3",
-            "-mthumb",
-            "-DSTM32F100xB",
-            "-Iinc",
-            "-ICMSIS_STM32F1",
-            "-IFreeRTOS/include",
-            "-IFreeRTOS/portable/GCC/ARM_CM3",
-            "-Os",
-            "-Wall",
-            "-fdata-sections",
-            "-ffunction-sections",
-            "-g",
-            "-gdwarf-2",
-            "-o",
-            "build/i2c_lcd_driver.o",
-            "src/i2c_lcd_driver.c"
-        ],
-        "directory": "/home/james/git-repos/mine/stm32-bare-metal",
-        "file": "src/i2c_lcd_driver.c"
+        "file": "FreeRTOS/tasks.c"
     }
 ]
