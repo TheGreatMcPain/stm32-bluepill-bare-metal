@@ -1,6 +1,6 @@
 #include "utils.h"
 
-volatile uint32_t tickCounter = 0;
+static volatile uint32_t tickCounter = 0;
 
 // Set clock speed to 24Mhz
 void sysclock_init(void) {
@@ -103,7 +103,7 @@ uint32_t getTickMillis(void) { return tickCounter; }
 void DelayMS(uint32_t t) {
   uint32_t currentTick = tickCounter;
 
-  while (tickCounter - currentTick == t) {
+  while ((tickCounter - currentTick) < t) {
     // Wait for t number of ticks.
   }
 }

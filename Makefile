@@ -12,11 +12,13 @@ src/utils.c \
 src/system_stm32f1xx.c \
 src/i2c_driver.c \
 src/i2c_lcd_driver.c \
-FreeRTOS/list.c \
-FreeRTOS/queue.c \
-FreeRTOS/tasks.c \
-FreeRTOS/portable/MemMang/heap_4.c \
-FreeRTOS/portable/GCC/ARM_CM3/port.c
+src/spi_driver.c \
+src/max6675_driver.c
+# FreeRTOS/list.c \
+# FreeRTOS/queue.c \
+# FreeRTOS/tasks.c \
+# FreeRTOS/portable/MemMang/heap_4.c \
+# FreeRTOS/portable/GCC/ARM_CM3/port.c
 
 ASM_SOURCES = \
 startup_stm32f100xb.s
