@@ -2,14 +2,20 @@
 
 static volatile uint32_t tickCounter = 0;
 
-// Set clock speed to 24Mhz
+// Set clock speed to 72Mhz
 void sysclock_init(void) {
-  /* Configure the HCLK to run at 24Mhz */
+  /* Configure the HCLK to run at 72Mhz */
   RCC->CR |= RCC_CR_HSEON; // Enable HSEON bit
 
   while (!(RCC->CR & RCC_CR_HSERDY)) {
     // Wait for HSERDY bit to flip to 1.
   }
+
+  // Setup Flash Prefetch Buffer and Latency
+  FLASH->ACR |= FLASH_ACR_PRFTBE; // Enable Prefetch buffer status
+
+  FLASH->ACR &= ~(FLASH_ACR_LATENCY); // Reset just in case
+  FLASH->ACR |= 0x2; // Set Latency to 2 wait states (For 72Mhz)
 
   // Configure PLL while it is off
   // Reset PLLSRC, PLLXTPRE, and PLLMUL
@@ -17,14 +23,12 @@ void sysclock_init(void) {
 
   RCC->CFGR &= ~(RCC_CFGR_PLLXTPRE); // PLLXTPRE bit to 0
   RCC->CFGR |= RCC_CFGR_PLLSRC;
-  RCC->CFGR |= RCC_CFGR_PLLMULL3;
-  // Set these to 0, because the stm32f100rb can only go upto 24Mhz.
-  RCC->CFGR &= ~(RCC_CFGR_HPRE);
-  RCC->CFGR &= ~(RCC_CFGR_PPRE1);
-  RCC->CFGR &= ~(RCC_CFGR_PPRE2);
+  RCC->CFGR |= RCC_CFGR_PLLMULL9; // Multiply PLL frequency (8Mhz) by 9 (72Mhz)
+  RCC->CFGR &= ~(RCC_CFGR_HPRE);  // Set HPRE to 0
+  RCC->CFGR |= RCC_CFGR_PPRE1_DIV2; // APB1 Must not exceed 36Mhz
+  RCC->CFGR &= ~(RCC_CFGR_PPRE2);   // APB2 Can run at 72Mhz
 
   RCC->CR |= RCC_CR_PLLON; // Enable PLLON bit
-
   while (!(RCC->CR & RCC_CR_PLLRDY)) {
     // Wait till PLLRDY bit to flip to 1
   }
@@ -56,7 +60,7 @@ void tim4_tick_init(void) {
   RCC->APB1RSTR &= ~(RCC_APB1RSTR_TIM4RST);
 
   // Set prescaler/autoreload timing registers
-  TIM4->PSC = (SystemCoreClock / 1000000) - 1; // 24Mhz / 1Mhz - 1 = 23
+  TIM4->PSC = (SystemCoreClock / 1000000) - 1; // 72Mhz / 1Mhz - 1 = 23
   TIM4->ARR = (1000000 / 1000) - 1;            // 1Mhz / 1000 - 1 = ~1ms
 
   // Send an update event to reset the timer and apply settings.
@@ -82,7 +86,7 @@ void systick_init(void) {
 void millisDelay(void) {
   // Set the counter limit to a millisecond
 
-  // I set the clock speed to 24Mhz
+  // I set the clock speed to 72Mhz
   SysTick->LOAD = (SystemCoreClock / 1000) - 1;
   // Reset the SysTick value register
   SysTick->VAL = 0;
@@ -114,4 +118,14 @@ void TIM4_IRQHandler(void) {
     // Increment tickCounter
     tickCounter++;
   }
+}
+
+uint32_t getPCLK1Freq(void) {
+  return (SystemCoreClock >>
+          APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos]);
+}
+
+uint32_t getPCLK2Freq(void) {
+  return (SystemCoreClock >>
+          APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE2) >> RCC_CFGR_PPRE2_Pos]);
 }

@@ -59,7 +59,7 @@ void i2c_init(I2C_TypeDef *I2C, uint8_t speed) {
   I2C->CR1 |= I2C_CR1_SWRST;
   I2C->CR1 &= ~(I2C_CR1_SWRST);
 
-  I2C->CR2 = 24; // Freq value of APB1 buss = 24
+  I2C->CR2 = getPCLK1Freq() / 1000000; // Freq value of APB1 buss
 
   // Set speed mode
   I2C->CCR = speed;

@@ -1,7 +1,7 @@
 #include "usart_driver.h"
 #include "string.h"
 
-void usart_init(USART_TypeDef *USART) {
+void usart_init(USART_TypeDef *USART, uint16_t baudRate) {
   // Enable alternate function.
   RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
 
@@ -21,8 +21,12 @@ void usart_init(USART_TypeDef *USART) {
   }
 
   // Configure Baud-Rate
-  // (The STM32VLDiscovery board uses a Max 24Mhz on all clocks.)
-  uint16_t usartdiv = SystemCoreClock / 115200;
+  uint16_t usartdiv = 0;
+  if (USART == USART1) { // USART1 is on APB2
+    usartdiv = getPCLK2Freq() / baudRate;
+  } else { // USART2 and USART3 are on APB1
+    usartdiv = getPCLK1Freq() / baudRate;
+  }
   USART->BRR = (((usartdiv / 16) << USART_BRR_DIV_Mantissa_Pos) |
                 ((usartdiv % 16) << USART_BRR_DIV_Fraction_Pos));
 

@@ -39,7 +39,7 @@ CPU = -mcpu=cortex-m3
 MCU = $(CPU) -mthumb
 
 C_DEFS = \
--DSTM32F100xB
+-DSTM32F103xB
 
 C_INCLUDES = \
 -Iinc \
