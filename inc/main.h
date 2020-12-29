@@ -2,7 +2,7 @@
 #define __MAIN_H
 // #include "FreeRTOS.h"
 #include "gpio_driver.h"
-// #include "usart_driver.h"
+#include "usart_driver.h"
 // #include "i2c_driver.h"
 // #include "i2c_lcd_driver.h"
 // #include "max6675_driver.h"
