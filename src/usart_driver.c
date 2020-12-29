@@ -1,7 +1,7 @@
 #include "usart_driver.h"
 #include "string.h"
 
-void usart_init(USART_TypeDef *USART, uint16_t baudRate) {
+void usart_init(USART_TypeDef *USART, uint32_t baudRate) {
   // Enable alternate function.
   RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
 

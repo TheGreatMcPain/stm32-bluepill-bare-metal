@@ -5,7 +5,7 @@
 #include "utils.h"
 
 // Setup USART
-void usart_init(USART_TypeDef *USART, uint16_t baudRate);
+void usart_init(USART_TypeDef *USART, uint32_t baudRate);
 
 // Send a string over USART
 void usart_send_string(USART_TypeDef *USART, char *str, uint32_t size);
