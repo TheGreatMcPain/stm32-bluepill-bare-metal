@@ -22,7 +22,7 @@ src/max6675_driver.c
 # FreeRTOS/portable/GCC/ARM_CM3/port.c
 
 ASM_SOURCES = \
-startup_stm32f100xb.s
+startup_stm32f103xb.s
 
 PREFIX = arm-none-eabi-
 
@@ -55,7 +55,7 @@ ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2
 endif
 
-LDSCRIPT = STM32F100XB_FLASH.ld
+LDSCRIPT = STM32F103XB_FLASH.ld
 
 LIBS = -lc -lm -lnosys
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
